@@ -20,13 +20,18 @@ class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
         )
     }
 
+    private val sharedListViewPool = RecyclerView.RecycledViewPool()
+
     override fun getItemCount(): Int {
         return colors.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExampleViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ExampleViewHolder(inflater.inflate(R.layout.example_page, parent, false))
+        return ExampleViewHolder(
+            inflater.inflate(R.layout.example_page, parent, false),
+            sharedListViewPool
+        )
     }
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
@@ -40,10 +45,13 @@ class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
     }
 }
 
-class ExampleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class ExampleViewHolder(view: View, listViewPool: RecyclerView.RecycledViewPool) : RecyclerView.ViewHolder(view) {
     val indexTextView: TextView = view.page_text_index
     val playerView: PlayerView = view.page_player
     val listView: RecyclerView = view.page_list.also {
-        it.layoutManager = LinearLayoutManager(it.context, RecyclerView.VERTICAL, false)
+        it.setRecycledViewPool(listViewPool)
+        it.layoutManager = LinearLayoutManager(it.context, RecyclerView.VERTICAL, false).apply {
+            recycleChildrenOnDetach = true
+        }
     }
 }
