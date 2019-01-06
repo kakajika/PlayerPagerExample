@@ -5,6 +5,9 @@ apply plugin: "io.gitlab.arturbosch.detekt"
 
 android {
     compileSdkVersion 28
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         applicationId "com.labo.kaji.aacexample"
         minSdkVersion 19
@@ -12,6 +15,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    dataBinding {
+        enabled = true
     }
     buildTypes {
         release {
@@ -25,9 +31,22 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    // Android Official
+    // AndroidX
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
+    implementation 'androidx.core:core-ktx:1.1.0-alpha03'
+
+    // ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.2'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.8.2'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.2'
+
+    // UI
+    implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
+
+    // Misc
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Test
     testImplementation 'junit:junit:4.12'
