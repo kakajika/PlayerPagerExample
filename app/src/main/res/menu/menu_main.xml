@@ -8,4 +8,8 @@
         android:id="@+id/menu_option_recyclerviewpager"
         android:title="RecyclerViewPager"
         />
+    <item
+        android:id="@+id/menu_option_looprecyclerviewpager"
+        android:title="LoopRecyclerViewPager"
+        />
 </menu>

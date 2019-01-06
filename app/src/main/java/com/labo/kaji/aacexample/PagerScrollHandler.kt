@@ -10,7 +10,7 @@ abstract class PagerScrollHandler(
 ) : RecyclerView.OnScrollListener() {
 
     init {
-        pager.post { playVideoAtPage(0) }
+        pager.post { playVideoAtPage(getCurrentPagePosition()) }
     }
 
     abstract fun getCurrentPagePosition(): Int
