@@ -10,6 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 class SidePreloadLayoutManager(context: Context) : LinearLayoutManager(context, RecyclerView.HORIZONTAL, false) {
     private val space = context.resources.displayMetrics.widthPixels / 2
 
+    init {
+        recycleChildrenOnDetach = true
+    }
+
     override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
         return space
     }
