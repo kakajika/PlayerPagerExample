@@ -2,11 +2,10 @@ package com.labo.kaji.aacexample
 
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.exoplayer2.ExoPlayer
+import com.labo.kaji.aacexample.ext.muted
 
 abstract class PagerScrollHandler(
-    private val pager: RecyclerView,
-    private val player: ExoPlayer
+    private val pager: RecyclerView
 ) : RecyclerView.OnScrollListener() {
 
     init {
@@ -39,14 +38,18 @@ abstract class PagerScrollHandler(
         }
     }
 
-    private fun playVideoAtPage(position: Int) {
+    protected open fun playVideoAtPage(position: Int) {
+        PlayerProvider.mutePlayer()
+
         pager.children
             .mapNotNull { pager.getChildViewHolder(it) }
             .filterIsInstance<ExampleViewHolder>()
             .onEach { it.playerView.player = null }
             .forEach {
                 if (it.adapterPosition == position) {
-                    it.playerView.player = player
+                    it.playerView.player = PlayerProvider
+                        .getPlayer(0)
+                        .apply { muted = false }
                 }
             }
     }

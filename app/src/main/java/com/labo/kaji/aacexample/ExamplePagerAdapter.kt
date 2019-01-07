@@ -8,11 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.ui.PlayerView
+import com.labo.kaji.aacexample.ext.muted
 import kotlinx.android.synthetic.main.example_page.view.*
 import kotlin.random.Random
 
 class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
-    private val colors = (1..10).map {
+    private val colors = (1..8).map {
         Color.rgb(
             Random.nextInt(128) + 128,
             Random.nextInt(128) + 128,
@@ -41,6 +42,7 @@ class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
     }
 
     override fun onViewRecycled(holder: ExampleViewHolder) {
+        holder.playerView.player?.muted = true
         holder.playerView.player = null
     }
 }

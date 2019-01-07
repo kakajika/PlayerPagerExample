@@ -14,11 +14,33 @@ class LoopRecyclerViewPagerFragment : Fragment() {
             val pager = it.pager
             pager.layoutManager = SidePreloadLayoutManager(it.context)
             pager.adapter = ExamplePagerAdapter()
-            pager.addOnScrollListener(object : PagerScrollHandler(pager, PlayerProvider.getPlayer(it.context)) {
-                override fun getCurrentPagePosition(): Int {
-                    return pager.currentPosition
+
+            val useMultiPlayer = arguments?.getBoolean(ARG_MULTI_PLAYER, false) ?: false
+            if (useMultiPlayer) {
+                pager.addOnScrollListener(object : MultiPlayerPagerScrollHandler(pager) {
+                    override fun getCurrentPagePosition(): Int {
+                        return pager.currentPosition
+                    }
+                })
+            } else {
+                pager.addOnScrollListener(object : PagerScrollHandler(pager) {
+                    override fun getCurrentPagePosition(): Int {
+                        return pager.currentPosition
+                    }
+                })
+            }
+        }
+    }
+
+    companion object {
+        private const val ARG_MULTI_PLAYER = "multi_player"
+
+        fun withMultiPlayer(): LoopRecyclerViewPagerFragment {
+            return LoopRecyclerViewPagerFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_MULTI_PLAYER, true)
                 }
-            })
+            }
         }
     }
 

@@ -9,7 +9,8 @@ import timber.log.Timber
 enum class ContentType {
     PAGER_SNAP_HELPER,
     RECYCLER_VIEW_PAGER,
-    LOOP_RECYCLER_VIEW_PAGER
+    LOOP_RECYCLER_VIEW_PAGER,
+    LOOP_RECYCLER_VIEW_PAGER_MULTI
 }
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.plant(Timber.DebugTree())
+        PlayerProvider.createPlayers(this)
         setContentView(R.layout.activity_main)
         openContent(ContentType.PAGER_SNAP_HELPER)
     }
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_option_snaphelper -> openContent(ContentType.PAGER_SNAP_HELPER)
             R.id.menu_option_recyclerviewpager -> openContent(ContentType.RECYCLER_VIEW_PAGER)
             R.id.menu_option_looprecyclerviewpager -> openContent(ContentType.LOOP_RECYCLER_VIEW_PAGER)
+            R.id.menu_option_looprecyclerviewpager_multi -> openContent(ContentType.LOOP_RECYCLER_VIEW_PAGER_MULTI)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -57,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                 ContentType.PAGER_SNAP_HELPER -> PagerSnapHelperFragment()
                 ContentType.RECYCLER_VIEW_PAGER -> RecyclerViewPagerFragment()
                 ContentType.LOOP_RECYCLER_VIEW_PAGER -> LoopRecyclerViewPagerFragment()
+                ContentType.LOOP_RECYCLER_VIEW_PAGER_MULTI -> LoopRecyclerViewPagerFragment.withMultiPlayer()
             })
             .commit()
     }
