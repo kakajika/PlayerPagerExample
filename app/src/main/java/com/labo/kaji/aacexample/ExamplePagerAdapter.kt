@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.example_page.view.*
 import kotlin.random.Random
 
 class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
-    private val colors = (1..100).map {
+    private val colors = (1..10).map {
         Color.rgb(
             Random.nextInt(128) + 128,
             Random.nextInt(128) + 128,
@@ -36,7 +36,7 @@ class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
         holder.indexTextView.text = "${position + 1}"
-        holder.listView.setBackgroundColor(colors[position])
+        holder.indexTextView.setBackgroundColor(colors[position])
         holder.listView.adapter = PageListAdapter((1..100).map { "Item $it" })
     }
 
