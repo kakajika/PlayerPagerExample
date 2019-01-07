@@ -10,45 +10,60 @@ import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
+import com.labo.kaji.aacexample.ext.muted
 
 object PlayerProvider {
 
     private val BANDWIDTH_METER = DefaultBandwidthMeter()
-    private var player: ExoPlayer? = null
+    private val playerPool = mutableListOf<ExoPlayer>()
 
-    fun getPlayer(context: Context): ExoPlayer {
-        player?.let { return it }
-
-        return ExoPlayerFactory.newSimpleInstance(
-            DefaultRenderersFactory(context),
-            DefaultTrackSelector(AdaptiveTrackSelection.Factory(BANDWIDTH_METER)),
-            DefaultLoadControl()
-        ).also {
-            it.playWhenReady = true
-            it.repeatMode = Player.REPEAT_MODE_ALL
-            it.prepare(buildMediaSource(context.getString(R.string.media_url_dash)))
-            player = it
+    fun createPlayers(context: Context) {
+        buildMediaSources(context).forEach { mediaSource ->
+            playerPool.add(ExoPlayerFactory.newSimpleInstance(
+                DefaultRenderersFactory(context),
+                DefaultTrackSelector(AdaptiveTrackSelection.Factory(BANDWIDTH_METER)),
+                DefaultLoadControl()
+            ).apply {
+                playWhenReady = true
+                repeatMode = Player.REPEAT_MODE_ALL
+                muted = true
+                prepare(mediaSource)
+            })
         }
     }
 
-    private fun buildMediaSource(url: String): MediaSource {
-        return DashMediaSource.Factory(
-            DefaultDashChunkSource.Factory(DefaultHttpDataSourceFactory("ua", BANDWIDTH_METER)),
-            DefaultHttpDataSourceFactory("ua")
-        ).createMediaSource(Uri.parse(url))
+    fun getPlayer(position: Int): ExoPlayer {
+        return playerPool[position % playerPool.size]
+    }
+
+    private fun buildMediaSources(context: Context): List<MediaSource> {
+        return listOf(
+            R.string.media_url_dash1,
+            R.string.media_url_dash2,
+            R.string.media_url_dash3
+        ).map { url ->
+            DashMediaSource.Factory(
+                DefaultDashChunkSource.Factory(DefaultHttpDataSourceFactory("ua", BANDWIDTH_METER)),
+                DefaultHttpDataSourceFactory("ua")
+            ).createMediaSource(Uri.parse(context.getString(url)))
+        }
+    }
+
+    fun mutePlayer() {
+        playerPool.forEach { it.muted = true }
     }
 
     fun resumePlayer() {
-        player?.let { it.playWhenReady = true }
+        playerPool.forEach { it.playWhenReady = true }
     }
 
     fun stopPlayer() {
-        player?.let { it.playWhenReady = false }
+        playerPool.forEach { it.playWhenReady = false }
     }
 
     fun releasePlayer() {
-        player?.let { it.release() }
-        player = null
+        playerPool.forEach { it.release() }
+        playerPool.clear()
     }
 
 }
