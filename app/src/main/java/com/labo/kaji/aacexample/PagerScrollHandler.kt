@@ -35,7 +35,6 @@ abstract class PagerScrollHandler(
                 page.animate()
                     .scaleX(scale)
                     .scaleY(scale)
-                    .start()
             }
         }
     }
