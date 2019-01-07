@@ -22,7 +22,7 @@ class PagerSnapHelperFragment : Fragment() {
 
             val snapHelper = PagerSnapHelper()
             snapHelper.attachToRecyclerView(pager)
-            pager.addOnScrollListener(object : PagerScrollHandler(pager, PlayerProvider.buildPlayer(it.context)) {
+            pager.addOnScrollListener(object : PagerScrollHandler(pager, PlayerProvider.getPlayer(it.context)) {
                 override fun getCurrentPagePosition(): Int {
                     return snapHelper
                         .findSnapView(layoutManager)
