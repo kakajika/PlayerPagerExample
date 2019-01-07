@@ -38,4 +38,17 @@ object PlayerProvider {
         ).createMediaSource(Uri.parse(url))
     }
 
+    fun resumePlayer() {
+        player?.let { it.playWhenReady = true }
+    }
+
+    fun stopPlayer() {
+        player?.let { it.playWhenReady = false }
+    }
+
+    fun releasePlayer() {
+        player?.let { it.release() }
+        player = null
+    }
+
 }

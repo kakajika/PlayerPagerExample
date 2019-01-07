@@ -21,6 +21,21 @@ class MainActivity : AppCompatActivity() {
         openContent(ContentType.PAGER_SNAP_HELPER)
     }
 
+    override fun onStart() {
+        super.onStart()
+        PlayerProvider.resumePlayer()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        PlayerProvider.stopPlayer()
+    }
+
+    override fun onDestroy() {
+        PlayerProvider.releasePlayer()
+        super.onDestroy()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
