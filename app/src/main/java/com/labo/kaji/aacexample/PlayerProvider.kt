@@ -14,8 +14,11 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 object PlayerProvider {
 
     private val BANDWIDTH_METER = DefaultBandwidthMeter()
+    private var player: ExoPlayer? = null
 
-    fun buildPlayer(context: Context): ExoPlayer {
+    fun getPlayer(context: Context): ExoPlayer {
+        player?.let { return it }
+
         return ExoPlayerFactory.newSimpleInstance(
             DefaultRenderersFactory(context),
             DefaultTrackSelector(AdaptiveTrackSelection.Factory(BANDWIDTH_METER)),
@@ -24,10 +27,11 @@ object PlayerProvider {
             it.playWhenReady = true
             it.repeatMode = Player.REPEAT_MODE_ALL
             it.prepare(buildMediaSource(context.getString(R.string.media_url_dash)))
+            player = it
         }
     }
 
-    fun buildMediaSource(url: String): MediaSource {
+    private fun buildMediaSource(url: String): MediaSource {
         return DashMediaSource.Factory(
             DefaultDashChunkSource.Factory(DefaultHttpDataSourceFactory("ua", BANDWIDTH_METER)),
             DefaultHttpDataSourceFactory("ua")

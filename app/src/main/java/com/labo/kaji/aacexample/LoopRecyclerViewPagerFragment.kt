@@ -14,7 +14,7 @@ class LoopRecyclerViewPagerFragment : Fragment() {
             val pager = it.pager
             pager.layoutManager = SidePreloadLayoutManager(it.context)
             pager.adapter = ExamplePagerAdapter()
-            pager.addOnScrollListener(object : PagerScrollHandler(pager, PlayerProvider.buildPlayer(it.context)) {
+            pager.addOnScrollListener(object : PagerScrollHandler(pager, PlayerProvider.getPlayer(it.context)) {
                 override fun getCurrentPagePosition(): Int {
                     return pager.currentPosition
                 }
