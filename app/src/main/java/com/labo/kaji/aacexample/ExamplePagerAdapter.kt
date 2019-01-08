@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.example_page.view.*
 import kotlin.random.Random
 
 class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
-    private val colors = (1..8).map {
+    private val colors = (1..9).map {
         Color.rgb(
             Random.nextInt(128) + 128,
             Random.nextInt(128) + 128,
