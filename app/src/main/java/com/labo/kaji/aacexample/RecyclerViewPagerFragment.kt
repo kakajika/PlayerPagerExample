@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.labo.kaji.aacexample.widget.SidePreloadLayoutManager
 import kotlinx.android.synthetic.main.recycler_view_pager.view.*
 
 class RecyclerViewPagerFragment : Fragment() {
