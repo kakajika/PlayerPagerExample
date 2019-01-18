@@ -5,6 +5,10 @@
         android:title="PagerSnapHelper"
         />
     <item
+        android:id="@+id/menu_option_loop_snaphelper"
+        android:title="LoopPagerSnapHelper"
+        />
+    <item
         android:id="@+id/menu_option_recyclerviewpager"
         android:title="RecyclerViewPager"
         />
