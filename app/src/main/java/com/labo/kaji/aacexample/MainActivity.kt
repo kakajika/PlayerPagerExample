@@ -8,6 +8,7 @@ import timber.log.Timber
 
 enum class ContentType {
     PAGER_SNAP_HELPER,
+    LOOP_PAGER_SNAP_HELPER,
     RECYCLER_VIEW_PAGER,
     LOOP_RECYCLER_VIEW_PAGER,
     LOOP_RECYCLER_VIEW_PAGER_MULTI
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.menu_option_snaphelper -> openContent(ContentType.PAGER_SNAP_HELPER)
+            R.id.menu_option_loop_snaphelper -> openContent(ContentType.LOOP_PAGER_SNAP_HELPER)
             R.id.menu_option_recyclerviewpager -> openContent(ContentType.RECYCLER_VIEW_PAGER)
             R.id.menu_option_looprecyclerviewpager -> openContent(ContentType.LOOP_RECYCLER_VIEW_PAGER)
             R.id.menu_option_looprecyclerviewpager_multi -> openContent(ContentType.LOOP_RECYCLER_VIEW_PAGER_MULTI)
@@ -58,6 +60,7 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.frame_main, when (type) {
                 ContentType.PAGER_SNAP_HELPER -> PagerSnapHelperFragment()
+                ContentType.LOOP_PAGER_SNAP_HELPER -> LoopPagerSnapHelperFragment()
                 ContentType.RECYCLER_VIEW_PAGER -> RecyclerViewPagerFragment()
                 ContentType.LOOP_RECYCLER_VIEW_PAGER -> LoopRecyclerViewPagerFragment()
                 ContentType.LOOP_RECYCLER_VIEW_PAGER_MULTI -> LoopRecyclerViewPagerFragment.withMultiPlayer()
