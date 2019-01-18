@@ -1,4 +1,4 @@
-package com.labo.kaji.aacexample
+package com.labo.kaji.aacexample.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.ui.PlayerView
+import com.labo.kaji.aacexample.R
 import com.labo.kaji.aacexample.ext.muted
 import kotlinx.android.synthetic.main.example_page.view.*
 import kotlin.random.Random

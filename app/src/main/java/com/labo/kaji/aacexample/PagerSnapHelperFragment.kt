@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.labo.kaji.aacexample.adapter.ExamplePagerAdapter
 import com.labo.kaji.aacexample.widget.SidePreloadLayoutManager
 import kotlinx.android.synthetic.main.pager_snap_helper.view.*
 

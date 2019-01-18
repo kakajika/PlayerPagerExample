@@ -1,4 +1,4 @@
-package com.labo.kaji.aacexample
+package com.labo.kaji.aacexample.adapter
 
 import android.view.LayoutInflater
 import android.view.View
