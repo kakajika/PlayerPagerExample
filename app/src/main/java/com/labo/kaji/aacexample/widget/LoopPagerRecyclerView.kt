@@ -2,10 +2,10 @@ package com.labo.kaji.aacexample.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 
-class LoopSnapRecyclerView : LoopRecyclerView {
+class LoopPagerRecyclerView : LoopRecyclerView {
 
     @JvmOverloads
     constructor(
@@ -14,7 +14,7 @@ class LoopSnapRecyclerView : LoopRecyclerView {
         defStyleAttr: Int = 0
     ): super(context, attrs, defStyleAttr)
 
-    private val snapHelper = LinearSnapHelper().also {
+    private val snapHelper = PagerSnapHelper().also {
         it.attachToRecyclerView(this)
     }
 

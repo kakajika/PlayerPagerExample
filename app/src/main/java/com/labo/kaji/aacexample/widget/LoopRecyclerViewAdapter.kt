@@ -4,24 +4,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ViewHolderDelegate
 
-class LoopSnapRecyclerViewAdapter<VH : RecyclerView.ViewHolder>(
-    private val rawAdapter: RecyclerView.Adapter<VH>
+class LoopRecyclerViewAdapter<VH : RecyclerView.ViewHolder>(
+    private val originalAdapter: RecyclerView.Adapter<VH>
 ) : RecyclerView.Adapter<VH>() {
 
     init {
-        setHasStableIds(rawAdapter.hasStableIds())
+        setHasStableIds(originalAdapter.hasStableIds())
     }
 
     fun getActualItemCount(): Int {
-        return rawAdapter.itemCount
+        return originalAdapter.itemCount
     }
 
     fun getActualItemViewType(position: Int): Int {
-        return rawAdapter.getItemViewType(position)
+        return originalAdapter.getItemViewType(position)
     }
 
     fun getActualItemId(position: Int): Long {
-        return rawAdapter.getItemId(position)
+        return originalAdapter.getItemId(position)
     }
 
     fun getActualPosition(position: Int): Int {
@@ -37,72 +37,72 @@ class LoopSnapRecyclerViewAdapter<VH : RecyclerView.ViewHolder>(
         return if (getActualItemCount() > 0) {
             Integer.MAX_VALUE
         } else {
-            rawAdapter.itemCount
+            originalAdapter.itemCount
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        return rawAdapter.onCreateViewHolder(parent, viewType)
+        return originalAdapter.onCreateViewHolder(parent, viewType)
     }
 
     override fun registerAdapterDataObserver(observer: RecyclerView.AdapterDataObserver) {
         super.registerAdapterDataObserver(observer)
-        rawAdapter.registerAdapterDataObserver(observer)
+        originalAdapter.registerAdapterDataObserver(observer)
     }
 
     override fun unregisterAdapterDataObserver(observer: RecyclerView.AdapterDataObserver) {
         super.unregisterAdapterDataObserver(observer)
-        rawAdapter.unregisterAdapterDataObserver(observer)
+        originalAdapter.unregisterAdapterDataObserver(observer)
     }
 
     override fun onViewRecycled(holder: VH) {
         super.onViewRecycled(holder)
-        rawAdapter.onViewRecycled(holder)
+        originalAdapter.onViewRecycled(holder)
     }
 
     override fun onFailedToRecycleView(holder: VH): Boolean {
-        return rawAdapter.onFailedToRecycleView(holder)
+        return originalAdapter.onFailedToRecycleView(holder)
     }
 
     override fun onViewAttachedToWindow(holder: VH) {
         super.onViewAttachedToWindow(holder)
-        rawAdapter.onViewAttachedToWindow(holder)
+        originalAdapter.onViewAttachedToWindow(holder)
     }
 
     override fun onViewDetachedFromWindow(holder: VH) {
         super.onViewDetachedFromWindow(holder)
-        rawAdapter.onViewDetachedFromWindow(holder)
+        originalAdapter.onViewDetachedFromWindow(holder)
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        rawAdapter.onAttachedToRecyclerView(recyclerView)
+        originalAdapter.onAttachedToRecyclerView(recyclerView)
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
-        rawAdapter.onDetachedFromRecyclerView(recyclerView)
+        originalAdapter.onDetachedFromRecyclerView(recyclerView)
     }
 
     override fun getItemViewType(position: Int): Int {
         return if (getActualItemCount() > 0) {
-            rawAdapter.getItemViewType(getActualPosition(position))
+            originalAdapter.getItemViewType(getActualPosition(position))
         } else {
             0
         }
     }
 
     override fun getItemId(position: Int): Long {
-        return rawAdapter.getItemId(getActualPosition(position))
+        return originalAdapter.getItemId(getActualPosition(position))
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        rawAdapter.onBindViewHolder(holder, getActualPosition(position))
+        originalAdapter.onBindViewHolder(holder, getActualPosition(position))
         ViewHolderDelegate.setPosition(holder, position)
     }
 
     override fun setHasStableIds(hasStableIds: Boolean) {
         super.setHasStableIds(hasStableIds)
-        rawAdapter.setHasStableIds(hasStableIds)
+        originalAdapter.setHasStableIds(hasStableIds)
     }
 }
