@@ -14,14 +14,6 @@ import kotlinx.android.synthetic.main.example_page.view.*
 import kotlin.random.Random
 
 class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
-    private val colors = (1..9).map {
-        Color.rgb(
-            Random.nextInt(128) + 128,
-            Random.nextInt(128) + 128,
-            Random.nextInt(128) + 128
-        )
-    }
-
     private val sharedListViewPool = RecyclerView.RecycledViewPool()
 
     override fun getItemCount(): Int {
@@ -45,6 +37,16 @@ class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
     override fun onViewRecycled(holder: ExampleViewHolder) {
         holder.playerView.player?.muted = true
         holder.playerView.player = null
+    }
+
+    companion object {
+        val colors = (1..9).map {
+            Color.rgb(
+                Random.nextInt(128) + 128,
+                Random.nextInt(128) + 128,
+                Random.nextInt(128) + 128
+            )
+        }
     }
 }
 
