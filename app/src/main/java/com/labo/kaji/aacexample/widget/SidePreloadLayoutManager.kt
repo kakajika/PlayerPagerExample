@@ -1,4 +1,4 @@
-package com.labo.kaji.aacexample
+package com.labo.kaji.aacexample.widget
 
 import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager

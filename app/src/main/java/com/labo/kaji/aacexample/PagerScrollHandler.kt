@@ -2,6 +2,7 @@ package com.labo.kaji.aacexample
 
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
+import com.labo.kaji.aacexample.adapter.ExampleViewHolder
 import com.labo.kaji.aacexample.ext.muted
 
 abstract class PagerScrollHandler(

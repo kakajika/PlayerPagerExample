@@ -1,4 +1,4 @@
-package com.labo.kaji.aacexample
+package com.labo.kaji.aacexample.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,19 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.ui.PlayerView
+import com.labo.kaji.aacexample.R
 import com.labo.kaji.aacexample.ext.muted
 import kotlinx.android.synthetic.main.example_page.view.*
 import kotlin.random.Random
 
 class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
-    private val colors = (1..9).map {
-        Color.rgb(
-            Random.nextInt(128) + 128,
-            Random.nextInt(128) + 128,
-            Random.nextInt(128) + 128
-        )
-    }
-
     private val sharedListViewPool = RecyclerView.RecycledViewPool()
 
     override fun getItemCount(): Int {
@@ -44,6 +37,16 @@ class ExamplePagerAdapter : RecyclerView.Adapter<ExampleViewHolder>() {
     override fun onViewRecycled(holder: ExampleViewHolder) {
         holder.playerView.player?.muted = true
         holder.playerView.player = null
+    }
+
+    companion object {
+        val colors = (1..9).map {
+            Color.rgb(
+                Random.nextInt(128) + 128,
+                Random.nextInt(128) + 128,
+                Random.nextInt(128) + 128
+            )
+        }
     }
 }
 
