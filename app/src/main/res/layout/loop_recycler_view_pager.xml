@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     >
 
+    <com.labo.kaji.aacexample.widget.LoopSnapRecyclerView
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#333"
+        />
+
     <com.lsjwzh.widget.recyclerviewpager.androidx.LoopRecyclerViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"

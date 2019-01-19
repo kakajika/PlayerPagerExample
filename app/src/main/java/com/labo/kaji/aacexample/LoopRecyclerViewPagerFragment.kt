@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.labo.kaji.aacexample.adapter.ExamplePagerAdapter
+import com.labo.kaji.aacexample.widget.PagerTabSynchronizer
 import com.labo.kaji.aacexample.widget.SidePreloadLayoutManager
 import kotlinx.android.synthetic.main.loop_recycler_view_pager.view.*
 
@@ -30,6 +31,10 @@ class LoopRecyclerViewPagerFragment : Fragment() {
                         return pager.currentPosition
                     }
                 })
+            }
+
+            PagerTabSynchronizer.setup(it.tabs, pager) {
+                pager.actualCurrentPosition
             }
         }
     }
