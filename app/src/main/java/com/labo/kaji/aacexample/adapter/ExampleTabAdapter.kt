@@ -23,8 +23,10 @@ class ExampleTabAdapter(
 
     fun selectTabAt(index: Int) {
         if (index < itemCount && index != selectedIndex) {
+            val previousIndex = selectedIndex
             selectedIndex = index
-            notifyDataSetChanged()
+            notifyItemChanged(previousIndex)
+            notifyItemChanged(index)
             tabSelectedListener?.onTabSelected(index)
         }
     }

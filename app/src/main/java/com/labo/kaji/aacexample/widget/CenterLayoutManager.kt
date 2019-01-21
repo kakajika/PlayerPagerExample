@@ -11,6 +11,10 @@ class CenterLayoutManager(
     reverseLayout: Boolean = false
 ) : LinearLayoutManager(context, orientation, reverseLayout) {
 
+    init {
+        recycleChildrenOnDetach = true
+    }
+
     override fun scrollToPosition(position: Int) {
         val centerChild = findViewByPosition(position)
         if (centerChild != null) {
