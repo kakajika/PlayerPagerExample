@@ -8,6 +8,8 @@ class LoopRecyclerViewAdapter<VH : RecyclerView.ViewHolder>(
     private val originalAdapter: RecyclerView.Adapter<VH>
 ) : RecyclerView.Adapter<VH>() {
 
+    private val itemChangeDelegates = mutableMapOf<Int, RecyclerView.AdapterDataObserver>()
+
     init {
         setHasStableIds(originalAdapter.hasStableIds())
     }
@@ -55,8 +57,24 @@ class LoopRecyclerViewAdapter<VH : RecyclerView.ViewHolder>(
         originalAdapter.unregisterAdapterDataObserver(observer)
     }
 
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        originalAdapter.onBindViewHolder(holder, getActualPosition(position))
+        ViewHolderDelegate.setPosition(holder, position)
+        val itemChangeObserver = object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                if (getActualPosition(position) in positionStart..positionStart+itemCount) {
+                    notifyItemChanged(position)
+                }
+            }
+        }
+        originalAdapter.registerAdapterDataObserver(itemChangeObserver)
+        itemChangeDelegates[position] = itemChangeObserver
+    }
+
     override fun onViewRecycled(holder: VH) {
         super.onViewRecycled(holder)
+        itemChangeDelegates.remove(holder.layoutPosition)
+            ?.let(originalAdapter::unregisterAdapterDataObserver)
         originalAdapter.onViewRecycled(holder)
     }
 
@@ -94,11 +112,6 @@ class LoopRecyclerViewAdapter<VH : RecyclerView.ViewHolder>(
 
     override fun getItemId(position: Int): Long {
         return originalAdapter.getItemId(getActualPosition(position))
-    }
-
-    override fun onBindViewHolder(holder: VH, position: Int) {
-        originalAdapter.onBindViewHolder(holder, getActualPosition(position))
-        ViewHolderDelegate.setPosition(holder, position)
     }
 
     override fun setHasStableIds(hasStableIds: Boolean) {
