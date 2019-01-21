@@ -35,7 +35,7 @@ object PagerTabSynchronizer {
                         dragged = false
 
                         val newPosition = getCurrentPage()
-                        if (tabPosition != newPosition) {
+                        if (newPosition != RecyclerView.NO_POSITION && tabPosition != newPosition) {
                             tabPosition = newPosition
                             tabs.smoothScrollToPosition(newPosition)
                             tabAdapter.selectTabAt(newPosition)
