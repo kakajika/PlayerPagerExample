@@ -23,24 +23,21 @@ object PagerTabSynchronizer {
         }
 
         pager.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            private var dragged: Boolean = false
-
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 when (newState) {
-                    RecyclerView.SCROLL_STATE_DRAGGING -> dragged = true
+                    RecyclerView.SCROLL_STATE_DRAGGING,
                     RecyclerView.SCROLL_STATE_IDLE -> {
-                        if (!dragged) {
-                            return
-                        }
-                        dragged = false
-
-                        val newPosition = getCurrentPage()
-                        if (newPosition != RecyclerView.NO_POSITION && tabPosition != newPosition) {
-                            tabPosition = newPosition
-                            tabs.smoothScrollToPosition(newPosition)
-                            tabAdapter.selectTabAt(newPosition)
-                        }
+                        notifyCurrentPageIfChanged()
                     }
+                }
+            }
+
+            private fun notifyCurrentPageIfChanged() {
+                val newPosition = getCurrentPage()
+                if (newPosition != RecyclerView.NO_POSITION && tabPosition != newPosition) {
+                    tabPosition = newPosition
+                    tabs.smoothScrollToPosition(newPosition)
+                    tabAdapter.selectTabAt(newPosition)
                 }
             }
         })
