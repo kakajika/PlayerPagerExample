@@ -44,7 +44,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.2'
 
     // UI
-    implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
+    implementation 'com.github.lsjwzh:recyclerviewpager:v1.1.2'
 
     // Misc
     implementation 'com.jakewharton.timber:timber:4.7.1'
